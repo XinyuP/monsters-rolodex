@@ -34,10 +34,29 @@ class App extends Comment {
     }
   
 
-
+  // when you want to modify an array, you want to modify a new one (immutability)
   render() {
      return (
       <div className='App'>
+        <input 
+          className='search-box' 
+          type='search' 
+          placeholder='search monsters' 
+          onChange={(event) => {
+            const searchString = event.target.value.toLowerCase();
+            const filteredMonsters = this.state.monsters.filter((monster) => {
+              monster.name.toLowerCase().includes(searchString);
+            });
+
+            this.setState(() => {
+              return { monsters: filteredMonsters };
+            });
+
+
+          }
+          }
+          />
+
         {this.state.monsters.map((monster) => {
           return (
             <div key={monster.id}>
