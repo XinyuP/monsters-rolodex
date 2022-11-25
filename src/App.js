@@ -45,8 +45,13 @@ class App extends Comment {
 
   // when you want to modify an array, you want to modify a new one (immutability)
   render() {
-    const filteredMonsters = this.state.monsters.filter((monster) => {
-      monster.name.toLowerCase().includes(this.state.searchField);
+    const {monsters, searchField} = this.state;
+    const {onSearchChange} = this;
+    // cast them to variables
+
+
+    const filteredMonsters = monsters.filter((monster) => {
+      monster.name.toLowerCase().includes(searchField);
     });
 
     return (
@@ -55,7 +60,7 @@ class App extends Comment {
           className="search-box"
           type="search"
           placeholder="search monsters"
-          onChange={this.onSearchChange}
+          onChange={onSearchChange}
         />
 
         {filteredMonsters.map((monster) => {
