@@ -34,6 +34,15 @@ class App extends Comment {
       );
   }
 
+
+  // only build once 
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLowerCase();
+    this.setState(() => {
+      return { searchField };
+    });
+  }
+
   // when you want to modify an array, you want to modify a new one (immutability)
   render() {
     const filteredMonsters = this.state.monsters.filter((monster) => {
@@ -46,12 +55,7 @@ class App extends Comment {
           className="search-box"
           type="search"
           placeholder="search monsters"
-          onChange={(event) => {
-            const searchField = event.target.value.toLowerCase();
-            this.setState(() => {
-              return { searchField };
-            });
-          }}
+          onChange={this.onSearchChange}
         />
 
         {filteredMonsters.map((monster) => {
