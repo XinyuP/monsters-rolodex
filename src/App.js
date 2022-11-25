@@ -64,7 +64,7 @@ class App extends Comment {
           onChange={onSearchChange}
         /> */}
         <SearchBox 
-          className='search-box' 
+          className='monsters-search-box' 
           onChangeHandler={onSearchChange} 
           palceholder='search monsters'  
         />
