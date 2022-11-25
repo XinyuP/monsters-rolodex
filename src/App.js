@@ -36,6 +36,7 @@ class App extends Comment {
 
 
   // only build once 
+  // not need to rendering extra anonymous functions whenever the render() is called 
   onSearchChange = (event) => {
     const searchField = event.target.value.toLowerCase();
     this.setState(() => {
@@ -63,16 +64,36 @@ class App extends Comment {
           onChange={onSearchChange}
         />
 
-        {filteredMonsters.map((monster) => {
+        {/* {filteredMonsters.map((monster) => {
           return (
             <div key={monster.id}>
               <h1>{monster.name}</h1>
             </div>
           );
-        })}
+        })} */}
+        <CardList monsters={filteredMonsters}/>
       </div>
     );
   }
 }
 
+///****!!! component rerender when setState() gets called and when props are updated!!!!! /////////
+
 export default App;
+// entire application lives inside of one component 
+// tie together the functionality of UI and the actual UI itself 
+// visual representation of UI and functional representation if UI 
+
+
+// we want to tie together reusable portions of code together into one segment
+
+// list of monsters can be a list of anything ----- component
+// search bar ----- component
+
+// when create component, generalize the functionality as much as you can --- as reusable as possible
+// so that don't have to rewrite a lot of code 
+
+// we want to build reusable bits of code that we can use in multiple places 
+// ideally it has a single responsibility 
+
+
