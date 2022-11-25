@@ -54,7 +54,7 @@ import { useState, useEffect, useDebugValue } from "react";
 // cannot just run part of the function, the whole function needs to rerun every single time 
 
 const App = () => {
-  console.log('render')
+  console.log('render');
   // whenever state value(searchField) changes -- trigger rerender of a component -- rerun the function from top to bottom
   const [searchField, setsearchField] = useState(''); // [value, setValue]
   // array destructuring -- useState gives back array of two values
@@ -93,12 +93,12 @@ const App = () => {
     });
 
     setFilteredMonsters(newFilteredMonsters);
-    console.log('effect is firing')
-  }, [monsters, searchField])
+    console.log('effect is firing');
+  }, [monsters, searchField]);
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
-    setsearchField(searchFieldString)
+    setsearchField(searchFieldString);
   }
 
 
@@ -106,16 +106,15 @@ const App = () => {
 
 
   return (
-    <div className="App">
-      <h1 className="app-title">
-        Monsters Rolodex
-      </h1>
-      <SearchBox 
-        className='monsters-search-box' 
-        onChangeHandler={onSearchChange} 
-        palceholder='search monsters'  
+    <div className='App'>
+      <h1 className='app-title'>Monsters Rolodex</h1>
+
+      <SearchBox
+        className='monsters-search-box'
+        onChangeHandler={onSearchChange}
+        placeholder='search monsters'
       />
-      <CardList monsters={filteredMonsters}/>
+      <CardList monsters={filteredMonsters} />
     </div>
   );
 
