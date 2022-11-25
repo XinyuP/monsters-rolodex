@@ -57,11 +57,16 @@ class App extends Comment {
 
     return (
       <div className="App">
-        <input
+        {/* <input
           className="search-box"
           type="search"
           placeholder="search monsters"
           onChange={onSearchChange}
+        /> */}
+        <SearchBox 
+          className='search-box' 
+          onChangeHandler={onSearchChange} 
+          palceholder='search monsters'  
         />
 
         {/* {filteredMonsters.map((monster) => {
