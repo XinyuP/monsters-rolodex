@@ -42,35 +42,67 @@ const funcB = (a, b) => {
 }
 
 
-
 In react, we use hooks to create impure functions -- generate side effect
 */
 
 
 
-
 // useState gives us ability to encapsulate local state in a functional component
-import { useState } from "react";
+import { useState, useEffect, useDebugValue } from "react";
 
 // props change and state changes ---> rerun the entire functional component
 // cannot just run part of the function, the whole function needs to rerun every single time 
 
 const App = () => {
   console.log('render')
-  const [searchField, setsearchField] = useState('aaa'); // [value, setValue]
   // whenever state value(searchField) changes -- trigger rerender of a component -- rerun the function from top to bottom
-  console.log(searchField)
+  const [searchField, setsearchField] = useState(''); // [value, setValue]
   // array destructuring -- useState gives back array of two values
   // if have multiple value in a state -- need multiple useState() calls
   // each hooks only hooks into one value
 
+  const [monsters, setMonsters] = useState([]); // pass the initial value to monsters which is [] 
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters);
 
+  /*
+  callback function, array of dependency 
+  callback: code/effect that we want to happen inside of functional component
+  array contains different dependenceis (state values or props values)
+  --> whenever any of the value inside of the dependency array changes --> run the callback function
+  
+  it run the callback function the first time the app mount 
+  then any subsequent re render of this component --> only run the callback function if the value
+  inside of the dependency array have changed --> able to generate the side effect, the effect that 
+  come out of the function 
+  */
+  useEffect(() => {
+    // console.log('effect fire')
+    fetch("https://jsonplaceholder.typicode.com/users") // a promise(async) --> eventually I am gonna have a value
+      .then((response) => response.json()) // convert response to json // every .then() that return a value is gonna return another promise that hasn't been resolved
+      .then((users) => setMonsters(users));
+  }, []);   // we never want to trigger this callback ever again other than the first time the app mounts 
+  // pass an empty array as the dependency array -- means the only time it should call the callback function is on mount
+  // here nothing should ever trigger you to recall the callback function(fetch()) again 
+
+
+
+
+  useEffect(() => {
+    const newFilteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(searchField);
+    });
+
+    setFilteredMonsters(newFilteredMonsters);
+    console.log('effect is firing')
+  }, [monsters, searchField])
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
     setsearchField(searchFieldString)
-    
   }
+
+
+ 
 
 
   return (
@@ -83,7 +115,7 @@ const App = () => {
         onChangeHandler={onSearchChange} 
         palceholder='search monsters'  
       />
-      {/* <CardList monsters={filteredMonsters}/> */}
+      <CardList monsters={filteredMonsters}/>
     </div>
   );
 
